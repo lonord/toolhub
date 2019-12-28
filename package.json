@@ -1,7 +1,7 @@
 {
-  "name": "electron-react-typescript",
-  "version": "0.0.6",
-  "description": "",
+  "name": "toolhub",
+  "version": "0.0.1",
+  "description": "ToolHub is a plug-in gui tool set.",
   "main": "./dist/main.js",
   "scripts": {
     "build-main": "cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
@@ -34,10 +34,10 @@
     ]
   },
   "build": {
-    "productName": "ProductName",
-    "appId": "org.your.productname",
+    "productName": "ToolHub",
+    "appId": "name.lonord.toolhub",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "public.app-category.utilities"
     },
     "directories": {
       "output": "release"
@@ -48,7 +48,8 @@
       "package.json"
     ],
     "linux": {
-      "target": "deb"
+      "target": "AppImage",
+      "category": "Utility"
     },
     "win": {
       "target": "nsis"
@@ -56,17 +57,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
+    "url": "git+ssh://git@github.com:lonord/toolhub.git"
   },
   "author": {
-    "name": "Your name",
-    "email": "Your email"
+    "name": "Loy B.",
+    "email": "lonord.b@gmail.com"
   },
-  "license": "SEE LICENSE",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Robinfr/electron-react-typescript/issues"
+    "url": "https://github.com/lonord/toolhub/issues"
   },
-  "homepage": "https://github.com/Robinfr/electron-react-typescript",
+  "homepage": "https://github.com/lonord/toolhub",
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
