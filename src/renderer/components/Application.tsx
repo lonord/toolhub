@@ -1,3 +1,5 @@
+import '../fonts/fonts.css'
+
 import { hot } from 'react-hot-loader/root'
 import * as React from 'react'
 import Box from '@material-ui/core/Box'

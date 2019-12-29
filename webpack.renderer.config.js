@@ -37,7 +37,7 @@ module.exports = merge.smart(baseConfig, {
                 loaders: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(gif|png|jpe?g|svg)$/,
+                test: /\.(gif|png|jpe?g|svg|ttf)$/,
                 use: [
                     'file-loader',
                     {
@@ -61,7 +61,9 @@ module.exports = merge.smart(baseConfig, {
             reportFiles: ['src/renderer/**/*']
         }),
         new webpack.NamedModulesPlugin(),
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'ToolHub'
+        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         })
