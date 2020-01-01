@@ -25,6 +25,8 @@
             true,
             "never"
         ],
+        "jsx-no-multiline-js": false,
+        "jsx-no-lambda": false,
         "react-hooks-nesting": {
             "severity": "error",
             "options": {

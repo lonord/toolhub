@@ -5,13 +5,25 @@ import MoreVert from '@material-ui/icons/MoreVert'
 import THTabs from './THTabs'
 import THTab from './THTab'
 import THIconTab from './THIconTab'
+import LaunchPad from './LaunchPad'
+import { useTools, ToolStatus } from '../tools/manager'
 
-const { useState } = React
+const { useState, useMemo } = React
 
 const TabsWindow = () => {
+    const { tools, shutdownTool } = useTools()
+    const runningTools = useMemo(
+        () => tools.filter(t =>
+            t.status === ToolStatus.RUNNING
+            || t.status === ToolStatus.STARTING
+            || t.status === ToolStatus.STARTED_WITH_ERROR
+        ),
+        [tools]
+    )
     const [tabIndex, setTabIndex] = useState(0)
-    const closeFn = () => {
-        console.log('close')
+    const closeClicked = (id: string) => {
+        shutdownTool(id)
+        setTabIndex(0)
     }
     return (
         <Box height="100%" display="flex" flexDirection="column">
@@ -19,9 +31,9 @@ const TabsWindow = () => {
                 <Box flexGrow={1} flexShrink={1} clone={true}>
                     <THTabs value={tabIndex} onChange={setTabIndex}>
                         <THIconTab icon="Home" />
-                        <THIconTab icon="invalid" />
-                        <THTab icon="Add" label="tab3" onClose={closeFn}/>
-                        <THTab icon="Settings" label="tab33333333333333333333333" onClose={closeFn}/>
+                        {runningTools.map(t => (
+                            <THTab key={t.id} icon={t.icon} label={t.name} onClose={() => closeClicked(t.id)}/>
+                        ))}
                     </THTabs>
                 </Box>
                 <Box display="flex" justifyContent="center" alignItems="center" px={1}>
@@ -30,8 +42,14 @@ const TabsWindow = () => {
                     </IconButton>
                 </Box>
             </Box>
-            <Box flexGrow={1} flexShrink={1}>
-                content
+            <Box display="flex" flexGrow={1} flexShrink={1}>
+                {tabIndex === 0
+                    ? (
+                        <LaunchPad />
+                    )
+                    : (
+                        <div>content</div>
+                    )}
             </Box>
         </Box>
     )
