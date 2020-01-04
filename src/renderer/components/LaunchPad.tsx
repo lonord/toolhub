@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Box from '@material-ui/core/Box'
-import { useTools, ToolStatus } from '../tools/manager'
+import { useTools, ToolStatus } from '../data/manager'
 
 const LaunchPad = () => {
     const { tools, installTool, uninstallTool, launchTool } = useTools()

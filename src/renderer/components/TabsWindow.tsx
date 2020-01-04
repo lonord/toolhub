@@ -6,7 +6,7 @@ import THTabs from './THTabs'
 import THTab from './THTab'
 import THIconTab from './THIconTab'
 import LaunchPad from './LaunchPad'
-import { useTools, ToolStatus } from '../tools/manager'
+import { useTools, ToolStatus } from '../data/manager'
 
 const { useState, useMemo } = React
 
