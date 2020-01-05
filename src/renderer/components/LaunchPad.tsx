@@ -14,7 +14,7 @@ const LaunchPad = () => {
 }
 
 const toolCanRun = (s: ToolStatus) => {
-    return s === ToolStatus.STOPPED || s === ToolStatus.STOPPED_WITH_ERROR
+    return s === ToolStatus.STOPPED
 }
 
 export default LaunchPad

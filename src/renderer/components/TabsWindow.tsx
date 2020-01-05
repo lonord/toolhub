@@ -16,7 +16,6 @@ const TabsWindow = () => {
         () => tools.filter(t =>
             t.status === ToolStatus.RUNNING
             || t.status === ToolStatus.STARTING
-            || t.status === ToolStatus.STARTED_WITH_ERROR
         ),
         [tools]
     )

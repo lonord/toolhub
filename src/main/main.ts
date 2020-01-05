@@ -1,8 +1,13 @@
 import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
+import init from './app/init'
 
 let win: BrowserWindow | null
+
+const initialize = async () => {
+    await init()
+}
 
 const installExtensions = async () => {
     const installer = require('electron-devtools-installer')
@@ -46,7 +51,12 @@ const createWindow = async () => {
     })
 }
 
-app.on('ready', createWindow)
+Promise.all([
+    initialize(),
+    new Promise((resolve) => {
+        app.on('ready', resolve)
+    })
+]).then(createWindow).catch(console.log)
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
