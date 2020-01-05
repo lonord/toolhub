@@ -20,19 +20,25 @@ const TabsWindow = () => {
         ),
         [tools]
     )
-    const [tabIndex, setTabIndex] = useState(0)
+    const [selectedTab, setSelectedTab] = useState('')
     const closeClicked = (id: string) => {
         shutdownTool(id)
-        setTabIndex(0)
+        setSelectedTab('')
     }
     return (
         <Box height="100%" display="flex" flexDirection="column">
             <Box display="flex" flexDirection="row" borderBottom="1px solid #e0e0e0" >
                 <Box flexGrow={1} flexShrink={1} clone={true}>
-                    <THTabs value={tabIndex} onChange={setTabIndex}>
+                    <THTabs value={selectedTab} onChange={setSelectedTab}>
                         <THIconTab icon="Home" />
                         {runningTools.map(t => (
-                            <THTab key={t.id} icon={t.icon} label={t.name} onClose={() => closeClicked(t.id)}/>
+                            <THTab
+                                key={t.id}
+                                value={t.id}
+                                icon={t.icon}
+                                label={t.name}
+                                onClose={() => closeClicked(t.id)}
+                            />
                         ))}
                     </THTabs>
                 </Box>
@@ -43,7 +49,7 @@ const TabsWindow = () => {
                 </Box>
             </Box>
             <Box display="flex" flexGrow={1} flexShrink={1}>
-                {tabIndex === 0
+                {!selectedTab || selectedTab === '#LaunchPad'
                     ? (
                         <LaunchPad />
                     )

@@ -10,15 +10,15 @@ const THTabs0 = withStyles({
 })(Tabs)
 
 export interface THTabsProps {
-    value: number
-    onChange(newValue: number): void
+    value: any
+    onChange(newValue: any): void
     children: React.ReactNode
     className?: string
 }
 
 const THTabs = (props: THTabsProps) => {
     const { onChange, ...otherProps } = props
-    const onChange0 = (_: any, newValue: number) => onChange(newValue)
+    const onChange0 = (_: any, newValue: any) => onChange(newValue)
     return (
         <THTabs0
             indicatorColor="primary"
