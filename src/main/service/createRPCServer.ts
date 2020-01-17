@@ -2,7 +2,7 @@ import { CommandHandler } from '../../common/conn'
 import { ICommand, ICommandType } from '../../common/util/createCommand'
 import { ipcMain } from 'electron'
 
-export type ReplyFn = (event: string, ...args: any[]) => void
+export type ReplyFn = CommandHandler
 
 export type ServerCommandHandler = (reply: ReplyFn, cmd: ICommand<any>) => void
 
@@ -26,8 +26,8 @@ function listen(listener: ServerCommandHandler, ...events: ICommandType<any>[]) 
     events.forEach((event) => {
         ipcMain.on(event.type, (e: any, arg: any) => {
             listener(
-                (s, ...ss) => {
-                    e.reply.call(s, ...ss)
+                (cmd) => {
+                    e.reply.call(cmd.type, cmd.args)
                 },
                 event(arg)
             )

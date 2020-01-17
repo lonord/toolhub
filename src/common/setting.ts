@@ -1,3 +1,3 @@
 export interface Setting {
-    javaHome: string
+    javaBinPath: string
 }
