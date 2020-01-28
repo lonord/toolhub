@@ -1,6 +1,6 @@
 import createCommand, { ICommand } from '../../common/util/createCommand'
 import { SettingProvider } from '../service/createSettingService'
-import { FilePathArg, IdArg, ToolStatus } from '../../common/conn'
+import { FilePathArg, IdArg, ToolStatus, IdMsgArg } from '../../common/conn'
 
 export interface Plugin {
     id: string
@@ -9,7 +9,7 @@ export interface Plugin {
     version: string
 }
 
-export type ListChangeArg = Readonly<Plugin>[]
+export type ListChangeArg = Plugin[]
 export type StatusChangeArg = { id: string, status: ToolStatus }
 
 export const pluginInstallAction = createCommand<FilePathArg>('plugin-install')
@@ -18,6 +18,8 @@ export const pluginLaunchAction = createCommand<IdArg>('plugin-launch')
 export const pluginShutdownAction = createCommand<IdArg>('plugin-shutdown')
 export const pluginListChangeAction = createCommand<ListChangeArg>('plugin-list-change')
 export const pluginStatusChangeAction = createCommand<StatusChangeArg>('plugin-status-change')
+export const pluginDataUpdateAction = createCommand<IdMsgArg>('plugin-data-update')
+export const pluginDataSubmitAction = createCommand<IdMsgArg>('plugin-data-submit')
 
 export type PluginActionHandler = (action: ICommand<any>) => void
 
