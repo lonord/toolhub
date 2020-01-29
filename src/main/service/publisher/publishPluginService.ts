@@ -1,4 +1,5 @@
 import { RPCServer } from '../createRPCServer'
+import { Plugin } from '../../plugin/Plugin'
 import {
     PluginHost,
     pluginInstallAction,
@@ -7,9 +8,10 @@ import {
     pluginShutdownAction,
     pluginDataSubmitAction,
     pluginListChangeAction,
-    Plugin,
     pluginStatusChangeAction,
-    pluginDataUpdateAction
+    pluginDataUpdateAction,
+    pluginInstallStatusAction,
+    pluginUninstallStatusAction
 } from '../../plugin/createPluginHost'
 import {
     MutableTool,
@@ -22,7 +24,9 @@ import {
     toolDataSubmitCommand,
     toolsUpdateCommand,
     toolDataUpdateCommand,
-    ToolStatus
+    ToolStatus,
+    installStatusCommand,
+    uninstallStatusCommand
 } from '../../../common/conn'
 import { isCommandType } from '../../../common/util/createCommand'
 
@@ -75,6 +79,10 @@ const publishPluginService = (rpc: RPCServer, host: PluginHost) => {
         } else if (isCommandType(cmd, pluginDataUpdateAction)) {
             dataMap.set(cmd.args.id, cmd.args.msg)
             rpc.push(toolDataUpdateCommand(cmd.args))
+        } else if (isCommandType(cmd, pluginInstallStatusAction)) {
+            rpc.push(installStatusCommand(cmd.args))
+        } else if (isCommandType(cmd, pluginUninstallStatusAction)) {
+            rpc.push(uninstallStatusCommand(cmd.args))
         }
     })
 }

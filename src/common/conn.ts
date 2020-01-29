@@ -8,9 +8,14 @@ export enum ToolStatus {
     STARTING,
     RUNNING,
     STOPPING,
-    STOPPED,
+    STOPPED
+}
+
+export enum InstallStatus {
+    UNKNOW = 0,
     INSTALLING,
-    UNINSTALLING
+    SUCCEED,
+    FAILED
 }
 
 export interface MutableTool {
@@ -24,6 +29,8 @@ export interface MutableTool {
 export type Tool = Readonly<MutableTool>
 
 export type FilePathArg = string
+export type InstallStatusArg = { pkgPath: string, status: InstallStatus, msg?: string }
+export type UninstallStatusArg = { id: string, status: InstallStatus, msg?: string }
 export type IdArg = string
 export type NoArg = typeof NoArg
 export type ToolsArg = Tool[]
@@ -32,7 +39,9 @@ export type SettingArg = Setting
 export type SettingModifyArg = Partial<Setting>
 
 export const installCommand = createCommand<FilePathArg>('install')
+export const installStatusCommand = createCommand<InstallStatusArg>('install-status')
 export const uninstallCommand = createCommand<IdArg>('uninstall')
+export const uninstallStatusCommand = createCommand<UninstallStatusArg>('uninstall-status')
 export const launchCommand = createCommand<IdArg>('launch')
 export const shutdownCommand = createCommand<IdArg>('shutdown')
 export const toolsRequestCommand = createCommand<NoArg>('tools-request')
