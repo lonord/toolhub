@@ -1,13 +1,12 @@
 import { join } from 'path'
-import { homedir } from 'os'
+import { app } from 'electron'
 import { ensureDirSync, existsSync, writeFileSync, readdirSync } from 'fs-extra'
 
 const LOG_DIR_NAME = 'logs'
 const LOG_OUT_FILE = 'stdout.log'
 const LOG_ERR_FILE = 'stderr.log'
-const ENV_DIR_NAME = '.toolhub'
 const CONF_DIR_NAME = 'conf'
-const CONF_FILE_NAME = 'toolhub.json'
+const CONF_FILE_NAME = 'config.json'
 const TOOLS_DIR_NAME = 'tools'
 
 const ctx = {
@@ -19,7 +18,7 @@ const ctx = {
 
 export const prepareEnv = () => {
     // ensure envDir
-    ctx.envDir = join(homedir(), ENV_DIR_NAME)
+    ctx.envDir = app.getPath('userData')
     ensureDirSync(ctx.envDir)
     // ensure confDir and confPath
     const confDir = join(ctx.envDir, CONF_DIR_NAME)
