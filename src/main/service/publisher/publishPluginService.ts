@@ -101,8 +101,9 @@ const reloadPlugins = (
     dItems.forEach(t => removedItems.add(t.id))
     // load plugins
     data.forEach((t) => {
+        const { metadata, ...pp } = t
         const tool = {
-            ...t,
+            ...pp,
             status: ToolStatus.STOPPED
         }
         plugins.push(tool)

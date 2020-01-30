@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { homedir } from 'os'
-import { ensureDirSync, existsSync, writeFileSync } from 'fs-extra'
+import { ensureDirSync, existsSync, writeFileSync, readdirSync } from 'fs-extra'
 
 const LOG_DIR_NAME = 'logs'
 const LOG_OUT_FILE = 'stdout.log'
@@ -41,6 +41,10 @@ export const getEnvDir = () => ctx.envDir
 export const getConfPath = () => ctx.confPath
 
 export const getToolDir = (id: string) => join(ctx.toolsDir, id)
+
+export const getToolList = () => readdirSync(ctx.toolsDir, { withFileTypes: true })
+    .filter(f => f.isDirectory())
+    .map(f => f.name)
 
 export const ensureAndGetToolOutLogFile = (id: string) => {
     const p = join(ctx.logsDir, id, LOG_OUT_FILE)

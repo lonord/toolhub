@@ -27,8 +27,10 @@ export interface PluginHost {
 }
 
 const createPluginHost = (settingProvider: SettingProvider) => {
-    const mgr = createPluginManager(settingProvider)
     const runner = createPluginRunner(settingProvider)
+    const mgr = createPluginManager()
+    mgr.injectPluginRunnerBridge(runner)
+    runner.injectPluginManagerBridge(mgr)
 
     const watchers: PluginActionHandler[] = []
     const send = (cmd: ICommand<any>) => watchers.forEach(w => w(cmd))
