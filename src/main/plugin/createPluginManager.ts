@@ -6,9 +6,11 @@ import { extname, join } from 'path'
 import { getToolDir, getToolList } from '../app/env'
 import { safeLoad } from 'js-yaml'
 import { isString, isObject, isArray } from 'util'
-import { platform } from 'os'
+import { platform, arch } from 'os'
 
 const PLATFORM = platform()
+// possible values are 'arm', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc', 'ppc64', 's390', 's390x', 'x32', and 'x64'
+const ARCH = arch()
 const PLUGIN_METADATA = 'metadata.yml'
 
 export interface PluginManager {
@@ -113,13 +115,14 @@ const loadPluginInfo = async (targetDir: string) => {
         throw new Error(`invalid tool plugin with version ${version}`)
     }
     const execp = rest[`exec_${PLATFORM}`]
+    const execp2 = rest[`exec_${PLATFORM}_${ARCH}`]
     return {
         id,
         name,
         version,
         icon: icon || '',
         metadata: {
-            exec: loadExecInfo(execp || exec)
+            exec: loadExecInfo(execp2 || execp || exec)
         }
     } as Plugin
 }
