@@ -6,7 +6,9 @@ import { extname, join } from 'path'
 import { getToolDir, getToolList } from '../app/env'
 import { safeLoad } from 'js-yaml'
 import { isString, isObject, isArray } from 'util'
+import { platform } from 'os'
 
+const PLATFORM = platform()
 const PLUGIN_METADATA = 'metadata.yml'
 
 export interface PluginManager {
@@ -100,7 +102,7 @@ const copyPkg = async (tmpDir: string, id: string) => {
 
 const loadPluginInfo = async (targetDir: string) => {
     const content = await readFile(join(targetDir, PLUGIN_METADATA), 'utf8')
-    const { id, name, icon, version, exec } = safeLoad(content)
+    const { id, name, icon, version, exec, ...rest } = safeLoad(content)
     if (!id || !isString(id)) {
         throw new Error(`invalid tool plugin with id ${id}`)
     }
@@ -110,13 +112,14 @@ const loadPluginInfo = async (targetDir: string) => {
     if (!version || !isString(version)) {
         throw new Error(`invalid tool plugin with version ${version}`)
     }
+    const execp = rest[`exec_${PLATFORM}`]
     return {
         id,
         name,
         version,
         icon: icon || '',
         metadata: {
-            exec: loadExecInfo(exec)
+            exec: loadExecInfo(execp || exec)
         }
     } as Plugin
 }
